@@ -1,26 +1,24 @@
 {
-  "name": "kanji-animated",
-  "version": "0.1.0",
-  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.8.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "d": "next dev --port 5173",
+    "b": "next build",
+    "p": "pnpx http-server out -a localhost -p 5173",
+    "l": "next lint"
   },
   "dependencies": {
-    "clsx": "^2.0.0",
-    "next": "13.5.3",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "clsx": "^2.1.1",
+    "next": "^15.3.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
-    "@types/node": "^20.8.2",
-    "@types/react": "^18.2.24",
-    "@types/react-dom": "^18.2.8",
-    "autoprefixer": "^10.4.16",
-    "postcss": "^8.4.31",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2"
+    "@types/node": "^22.14.1",
+    "@tailwindcss/postcss": "^4.1.3",
+    "@types/react": "^18.3.20",
+    "@types/react-dom": "^18.3.6",
+    "tailwindcss": "^4.1.3",
+    "typescript": "^5.8.3"
   }
 }
