@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { fadeIn } from './animations'
 import { Renderer, createCharRender, createCharTypingRender } from './renders'
 import { context } from './meta'
 import { getTimeIncreaseValue, getTimeValue } from './utils'
+import ShortcutsModal from '@/components/shortcuts'
 
 type TimelineItem = {
   type: 'lyrics'
@@ -107,13 +108,56 @@ const AnimateCanvas: React.FC = () => {
   const ref = useRef<HTMLCanvasElement>(null)
   const audioRef = useRef<HTMLAudioElement>()
   const [ready, setReady] = useState(false)
+  const [mouseMoveTimestamp, setMouseMoveTimestamp] = useState(0)
 
-  const onClick = () => {
-    if (!ready) return
-    const audio = audioRef.current!
-
-    audio.paused ? audio.play() : audio.pause()
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === ' ') {
+      // play/pause
+      const audio = audioRef.current!
+      audio.paused ? audio.play() : audio.pause()
+    } else if (e.key === 'f') {
+      // full screen
+      if (document.fullscreenElement) {
+        document.exitFullscreen()
+      } else {
+        document.documentElement.requestFullscreen()
+      }
+    } else if (e.key === 'ArrowLeft') {
+      // backward 5s
+      const audio = audioRef.current!
+      audio.currentTime -= 5
+    } else if (e.key === 'ArrowRight') {
+      // forward 5s
+      const audio = audioRef.current!
+      audio.currentTime += 5
+    }
   }
+
+  useEffect(() => {
+    // show mouse when mouse move
+    const onMouseMove = () => {
+      document.body.style.cursor = 'auto'
+      setMouseMoveTimestamp(Date.now())
+    }
+    const interval = setInterval(() => {
+      // check if mouse is not moving
+      if (Date.now() - mouseMoveTimestamp > 1000 && document.fullscreenElement !== null) {
+        document.body.style.cursor = 'none'
+      }
+    }, 1000)
+    window.addEventListener('mousemove', onMouseMove)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      clearInterval(interval)
+    }
+  }, [mouseMoveTimestamp])
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
 
   useEffect(() => {
     if (!ref.current) return
@@ -123,7 +167,7 @@ const AnimateCanvas: React.FC = () => {
     const script = createScript()
 
     if (!audioRef.current) {
-      const audio = (audioRef.current = new Audio('./audio-short.mp3'))
+      const audio = (audioRef.current = new Audio('/audio-short.mp3'))
       audio.load()
       audio.volume = 0.8
       audio.addEventListener('loadeddata', () => {
@@ -158,7 +202,7 @@ const AnimateCanvas: React.FC = () => {
 
   return (
     <>
-      <div className='fixed inset-0 bottom-2 flex items-center justify-center' onClick={onClick}>
+      <div className='fixed inset-0 bottom-2 flex items-center justify-center'>
         <canvas ref={ref} className='aspect-video max-w-full max-h-full' />
       </div>
       {ready && <Control audio={audioRef.current!} />}
@@ -170,7 +214,20 @@ const Control: React.FC<{ audio: HTMLAudioElement }> = ({ audio }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [time, setTime] = useState(0)
   const [pause, setPause] = useState(true)
-  const isDown = useRef(false)
+  const [showShortcuts, setShowShortcuts] = useState(true)
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'd') {
+      setShowShortcuts(prev => !prev)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+    }
+  }, [])
 
   useEffect(() => {
     const onUpdateState = () => {
@@ -181,79 +238,102 @@ const Control: React.FC<{ audio: HTMLAudioElement }> = ({ audio }) => {
       setTime(audio.currentTime)
     }
 
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDown.current) return
-      setTimeFromX(e.clientX)
-      e.stopPropagation()
-      e.preventDefault()
-    }
+    // const onMouseMove = (e: MouseEvent) => {
+    //   if (!isDown.current) return
+    //   setTimeFromX(e.clientX)
+    //   e.stopPropagation()
+    //   e.preventDefault()
+    // }
 
-    const onTouchMove = (e: TouchEvent) => {
-      if (!isDown.current || e.targetTouches.length === 0) return
-      setTimeFromX(e.targetTouches.item(0)!.clientX)
-      e.stopPropagation()
-      e.preventDefault()
-    }
+    // const onTouchMove = (e: TouchEvent) => {
+    //   if (!isDown.current || e.targetTouches.length === 0) return
+    //   setTimeFromX(e.targetTouches.item(0)!.clientX)
+    //   e.stopPropagation()
+    //   e.preventDefault()
+    // }
 
-    const onEnd = (e: Event) => {
-      if (!isDown.current) return
-      isDown.current = false
-      audio.play()
-      e.stopPropagation()
-      e.preventDefault()
-    }
+    // const onEnd = (e: Event) => {
+    //   if (!isDown.current) return
+    //   isDown.current = false
+    //   audio.play()
+    //   e.stopPropagation()
+    //   e.preventDefault()
+    // }
 
     audio.addEventListener('play', onUpdateState)
     audio.addEventListener('pause', onUpdateState)
     audio.addEventListener('timeupdate', onTimeUpdate)
-    window.addEventListener('touchmove', onTouchMove)
-    window.addEventListener('mousemove', onMouseMove)
-    window.addEventListener('touchend', onEnd)
-    window.addEventListener('mouseup', onEnd)
+    // window.addEventListener('touchmove', onTouchMove)
+    // window.addEventListener('mousemove', onMouseMove)
+    // window.addEventListener('touchend', onEnd)
+    // window.addEventListener('mouseup', onEnd)
 
     return () => {
       audio.removeEventListener('play', onUpdateState)
       audio.removeEventListener('pause', onUpdateState)
       audio.removeEventListener('timeupdate', onTimeUpdate)
-      window.removeEventListener('touchmove', onTouchMove)
-      window.removeEventListener('mousemove', onMouseMove)
-      window.removeEventListener('touchend', onEnd)
-      window.removeEventListener('mouseup', onEnd)
+      // window.removeEventListener('touchmove', onTouchMove)
+      // window.removeEventListener('mousemove', onMouseMove)
+      // window.removeEventListener('touchend', onEnd)
+      // window.removeEventListener('mouseup', onEnd)
     }
   }, [audio])
 
-  const setTimeFromX = useCallback(
-    (x: number) => {
-      if (!containerRef.current) return
-      const bounding = containerRef.current.getBoundingClientRect()
-      const percent = (x - bounding.left) / bounding.width
+  // const setTimeFromX = useCallback(
+  //   (x: number) => {
+  //     if (!containerRef.current) return
+  //     const bounding = containerRef.current.getBoundingClientRect()
+  //     const percent = (x - bounding.left) / bounding.width
 
-      audio.currentTime = Math.round(percent * audio.duration)
-    },
-    [audio]
-  )
+  //     audio.currentTime = Math.round(percent * audio.duration)
+  //   },
+  //   [audio]
+  // )
 
   return (
     <>
-      {pause && (
-        <div className='fixed inset-0 flex pointer-events-none select-none'>
-          <p className='font-medium m-auto text-center'>Click to Play</p>
-        </div>
-      )}
+      <div className='fixed inset-0 flex pointer-events-none select-none'>
+        {showShortcuts ? (
+          <div className='m-auto w-sm bg-[#171717] rounded-md p-8'>
+            <ShortcutsModal />
+          </div>
+        ) : pause ? (
+          <div className='m-auto'>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              width='120'
+              height='120'
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              strokeWidth='2'
+              // strokeLinecap='round'
+              // strokeLinejoin='round'
+              className='opacity-40'
+            >
+              <polygon points='6 3 20 12 6 21 6 3' />
+            </svg>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
       <div
         ref={containerRef}
-        className='fixed w-full h-2 bottom-0 overflow-hidden cursor-pointer'
-        onTouchStart={e => {
-          if (e.targetTouches.length === 0) return
-          isDown.current = true
-          audio.pause()
-          setTimeFromX(e.targetTouches.item(0)!.clientX)
-        }}
-        onMouseDown={e => {
-          isDown.current = true
-          audio.pause()
-          setTimeFromX(e.clientX)
-        }}
+        className={`fixed w-full h-1 bottom-0 overflow-hidden opacity-40 ${
+          document.fullscreenElement !== null ? 'hidden' : ''
+        }`}
+        // onTouchStart={e => {
+        //   if (e.targetTouches.length === 0) return
+        //   isDown.current = true
+        //   audio.pause()
+        //   setTimeFromX(e.targetTouches.item(0)!.clientX)
+        // }}
+        // onMouseDown={e => {
+        //   isDown.current = true
+        //   audio.pause()
+        //   setTimeFromX(e.clientX)
+        // }}
       >
         <div
           className='bg-white h-full'
