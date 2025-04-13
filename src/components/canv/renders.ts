@@ -2,7 +2,7 @@ import { Animation } from './animations'
 import { context, requireContext, rotates } from './meta'
 import { getTimeValue, renderAnimationsAfter, renderAnimationsBefore } from './utils'
 
-export type Renderer = {
+type Renderer = {
   render: () => void
 }
 
@@ -11,7 +11,7 @@ type CharRendererOptions = Partial<{
   animation: Animation | Animation[]
 }>
 
-export function createCharRender(char: string, x: number, y: number, options: CharRendererOptions = {}) {
+function createCharRender(char: string, x: number, y: number, options: CharRendererOptions = {}) {
   return {
     render: () => {
       render(char, x, y, options)
@@ -19,7 +19,7 @@ export function createCharRender(char: string, x: number, y: number, options: Ch
   }
 }
 
-export function createCharTypingRender(
+function createCharTypingRender(
   char: string,
   x: number,
   y: number,
@@ -73,3 +73,5 @@ function render(char: string, x: number, y: number, { animation, font }: CharRen
   if (animation) renderAnimationsAfter(char, animation)
   ctx.restore()
 }
+
+export { Renderer, createCharRender, createCharTypingRender }

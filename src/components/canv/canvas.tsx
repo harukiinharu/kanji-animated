@@ -103,7 +103,7 @@ const createScript = (): Script => {
   }
 }
 
-export function AnimateCanvas() {
+const AnimateCanvas: React.FC = () => {
   const ref = useRef<HTMLCanvasElement>(null)
   const audioRef = useRef<HTMLAudioElement>()
   const [ready, setReady] = useState(false)
@@ -166,7 +166,7 @@ export function AnimateCanvas() {
   )
 }
 
-function Control({ audio }: { audio: HTMLAudioElement }) {
+const Control: React.FC<{ audio: HTMLAudioElement }> = ({ audio }) => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [time, setTime] = useState(0)
   const [pause, setPause] = useState(true)
@@ -265,3 +265,5 @@ function Control({ audio }: { audio: HTMLAudioElement }) {
     </>
   )
 }
+
+export default AnimateCanvas

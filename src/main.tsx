@@ -16,12 +16,13 @@ const App: React.FC = () => {
   )
 }
 
-export default App
-
 if (typeof window !== 'undefined') {
   hydrate(<App />, document.getElementById('root'))
 }
 
-export async function prerender(data) {
+async function prerender(data) {
   return await ssr(<App {...data} />)
 }
+
+export default App
+export { prerender }

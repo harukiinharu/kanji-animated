@@ -1,12 +1,12 @@
 import { Animation } from './animations'
 import { context } from './meta'
 
-export function renderAnimationsBefore(char: string, animations: Animation | Animation[]) {
+function renderAnimationsBefore(char: string, animations: Animation | Animation[]) {
   if (Array.isArray(animations)) animations.forEach(v => v.beforeRender(char))
   else animations.beforeRender(char)
 }
 
-export function renderAnimationsAfter(char: string, animations: Animation | Animation[]) {
+function renderAnimationsAfter(char: string, animations: Animation | Animation[]) {
   if (Array.isArray(animations)) animations.forEach(v => v.afterRender(char))
   else animations.afterRender(char)
 }
@@ -17,7 +17,7 @@ export function renderAnimationsAfter(char: string, animations: Animation | Anim
  * @param end When transition ends
  * @param value The value to transition
  */
-export function getTimeValue(start: number, end: number, value: number): number {
+function getTimeValue(start: number, end: number, value: number): number {
   if (context.time < start) return 0
   const percent = Math.min((context.time - start) / (end - start), 1)
   return value * percent
@@ -28,6 +28,8 @@ export function getTimeValue(start: number, end: number, value: number): number 
  * @param end When transition ends
  * @param increase How much value to increase per unit
  */
-export function getTimeIncreaseValue(start: number, end: number, increase: number): number {
+function getTimeIncreaseValue(start: number, end: number, increase: number): number {
   return getTimeValue(start, end, Math.max(end - start, 0) * increase)
 }
+
+export { renderAnimationsBefore, renderAnimationsAfter, getTimeValue, getTimeIncreaseValue }

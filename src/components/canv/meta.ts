@@ -1,4 +1,4 @@
-export const rotates = new Map(
+const rotates = new Map(
   Object.entries({
     '「': Math.PI / 2,
     '」': Math.PI / 2,
@@ -12,12 +12,14 @@ type Context = {
   vertical: boolean
 }
 
-export let context: Context = {
+let context: Context = {
   ctx: null,
   time: 0,
   vertical: true,
 }
 
-export function requireContext() {
+function requireContext() {
   return context.ctx!
 }
+
+export { rotates, context, requireContext }

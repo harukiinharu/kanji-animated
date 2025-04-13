@@ -1,12 +1,12 @@
 import { context, requireContext } from './meta'
 import { getTimeValue, renderAnimationsAfter, renderAnimationsBefore } from './utils'
 
-export type Animation = {
+type Animation = {
   beforeRender: (char: string) => void
   afterRender: (char: string) => void
 }
 
-export function writing(delay: number, duration = 1): Animation {
+function writing(delay: number, duration = 1): Animation {
   const startTime = context.time + delay,
     endTime = context.time + delay + duration
   const dashLen = 220
@@ -26,7 +26,7 @@ export function writing(delay: number, duration = 1): Animation {
   }
 }
 
-export function fadeIn(delay: number, duration = 1): Animation {
+function fadeIn(delay: number, duration = 1): Animation {
   const startTime = context.time + delay,
     endTime = context.time + delay + duration
 
@@ -41,7 +41,7 @@ export function fadeIn(delay: number, duration = 1): Animation {
   }
 }
 
-export function scaleIn(
+function scaleIn(
   delay: number,
   duration = 1,
   {
@@ -80,7 +80,7 @@ export function scaleIn(
   }
 }
 
-export function slideIn(
+function slideIn(
   delay: number,
   duration = 1,
   {
@@ -110,3 +110,5 @@ export function slideIn(
     },
   }
 }
+
+export { Animation, writing, fadeIn, scaleIn, slideIn }

@@ -1,4 +1,4 @@
-import { AnimateCanvas } from '@/components/canv/canvas'
+import AnimateCanvas from '@/components/canv/canvas'
 
 const Home: React.FC = () => {
   return (
@@ -19,7 +19,7 @@ const Home: React.FC = () => {
       <a
         href='https://youtu.be/0HYm60Mjm0k'
         rel='noreferrer noopener'
-        className='fixed bottom-4 right-4 text-sm z-10 sm:text-lg'
+        className='fixed bottom-4 right-4 text-sm z-10'
       >
         命に嫌われている - Iori Kanzaki
       </a>
