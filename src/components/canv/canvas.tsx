@@ -210,12 +210,12 @@ const AnimateCanvas: React.FC = () => {
   }, [timeline])
 
   return (
-    <>
+    <main>
       <div className='fixed inset-0 flex flex-col'>
         <canvas ref={ref} className='aspect-video max-w-full max-h-full' />
       </div>
       {ready && <Control audio={audioRef.current!} />}
-    </>
+    </main>
   )
 }
 
