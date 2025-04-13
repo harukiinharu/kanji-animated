@@ -1,4 +1,3 @@
-'use client'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { fadeIn } from './animations'
 import { Renderer, createCharRender, createCharTypingRender } from './renders'
