@@ -115,7 +115,7 @@ const createScript = (): Script => {
 
 const AnimateCanvas: React.FC = () => {
   const ref = useRef<HTMLCanvasElement>(null)
-  const audioRef = useRef<HTMLAudioElement>()
+  const audioRef = useRef<HTMLAudioElement>(null)
   const [ready, setReady] = useState(false)
   const [mouseMoveTimestamp, setMouseMoveTimestamp] = useState(0)
 
@@ -176,7 +176,7 @@ const AnimateCanvas: React.FC = () => {
     const script = createScript()
 
     if (!audioRef.current) {
-      const audio = (audioRef.current = new Audio('/audio-short.mp3'))
+      const audio = (audioRef.current = new Audio('./audio-short.mp3'))
       audio.load()
       audio.volume = 0.8
       audio.addEventListener('loadeddata', () => {
