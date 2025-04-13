@@ -1,28 +1,17 @@
-import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'preact-iso'
-import Layout from '@/layout'
+import { createRoot } from 'react-dom/client'
+import { HashRouter, Routes, Route } from 'react-router-dom'
 import Home from '@/pages/index'
 import NotFound from '@/pages/404'
+import '@/globals.css'
 
 const App: React.FC = () => {
   return (
-    <Layout>
-      <LocationProvider>
-        <Router>
-          <Route path='/' component={Home} />
-          <Route default component={NotFound} />
-        </Router>
-      </LocationProvider>
-    </Layout>
+    <HashRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='*' element={<NotFound />} />
+      </Routes>
+    </HashRouter>
   )
 }
-
-if (typeof window !== 'undefined') {
-  hydrate(<App />, document.getElementById('root'))
-}
-
-async function prerender(data) {
-  return await ssr(<App {...data} />)
-}
-
-export default App
-export { prerender }
+createRoot(document.getElementById('root')!).render(<App />)
