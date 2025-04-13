@@ -3,7 +3,7 @@
   "packageManager": "pnpm@10.8.0",
   "scripts": {
     "d": "vite",
-    "b": "vite build",
+    "b": "vite build && mv dist/404/index.html dist/404.html && rm -r dist/404/",
     "p": "pnpx http-server dist -a localhost -p 5173"
   },
   "dependencies": {
