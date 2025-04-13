@@ -15,31 +15,35 @@ type TimelineItem = {
   animation?: 'none' | 'type'
 }
 
+const HDWidth = 1920
+const HDHeight = 1080
+const scale = 2
+
 const timeline: TimelineItem[] = [
-  { type: 'lyrics', time: 10.5, x: 1760, y: 120, text: '命に嫌われている。', fontSize: 80, animation: 'none' },
-  { type: 'lyrics', time: 20, x: 80, y: 120, text: '「死にたいなんて言うなよ。」' },
-  { type: 'lyrics', time: 22.5, x: 200, y: 200, text: '「諦めないで生きろよ。」' },
-  { type: 'lyrics', time: 24.2, x: 400, y: 160, text: 'そんな歌が正しいなんて馬鹿げてるよな。' },
-  { type: 'lyrics', time: 28.5, x: 280, y: 240, text: '実際自分は死んでもよくて' },
-  { type: 'lyrics', time: 31.5, x: 600, y: 360, text: '周りが死んだら悲しくて' },
-  { type: 'lyrics', time: 33.5, x: 720, y: 200, text: '「それが嫌だから」っていう' },
-  { type: 'lyrics', time: 36, x: 800, y: 300, text: 'エゴなんです。' },
-  { type: 'lyrics', time: 38.5, x: 1000, y: 200, text: '他人が生きてもどうでもよくて' },
-  { type: 'lyrics', time: 41, x: 1200, y: 400, text: '誰かを嫌うこともファッションで' },
-  { type: 'lyrics', time: 43.5, x: 1280, y: 420, text: 'それでも「平和に生きよう」' },
-  { type: 'lyrics', time: 45.8, x: 1400, y: 540, text: 'なんて素敵なことでしょう。' },
-  { type: 'lyrics', time: 48.5, x: 1500, y: 640, text: '画面の先では誰かが死んで' },
-  { type: 'lyrics', time: 50.5, x: 100, y: 880, text: 'それを嘆いて誰かが歌って' },
-  { type: 'lyrics', time: 53, x: 200, y: 900, text: 'それに感化された少年が' },
-  { type: 'lyrics', time: 55.5, x: 340, y: 980, text: 'ナイフを持って走った。' },
-  { type: 'lyrics', time: 58, x: 500, y: 1080, text: '僕らは命に嫌われている。' },
-  { type: 'lyrics', time: 60, x: 700, y: 1120, text: '価値観もエゴも押し付けて' },
-  { type: 'lyrics', time: 62, x: 1200, y: 1200, text: 'いつも誰かを殺したい歌を' },
-  { type: 'lyrics', time: 64, x: 1320, y: 1300, text: '簡単に電波で流した。' },
-  { type: 'lyrics', time: 67, x: 1580, y: 1400, text: '僕らは命に嫌われている。' },
-  { type: 'lyrics', time: 70, x: 240, y: 1500, text: '軽々しく死にたいだとか' },
-  { type: 'lyrics', time: 72, x: 380, y: 1560, text: '軽々しく命を見てる僕らは' },
-  { type: 'lyrics', time: 75, x: (1900 - 80) / 2, y: 1800, fontSize: 80, text: '命に嫌われている。' },
+  { type: 'lyrics', time: 10.8, x: 1760, y: 120, text: '命に嫌われている。', fontSize: 80, animation: 'none' },
+  { type: 'lyrics', time: 20.4, x: 80, y: 120, text: '「死にたいなんて言うなよ。」' },
+  { type: 'lyrics', time: 22.8, x: 200, y: 200, text: '「諦めないで生きろよ。」' },
+  { type: 'lyrics', time: 24.8, x: 400, y: 160, text: 'そんな歌が正しいなんて馬鹿げてるよな。' },
+  { type: 'lyrics', time: 29.2, x: 280, y: 240, text: '実際自分は死んでもよくて' },
+  { type: 'lyrics', time: 32.0, x: 600, y: 360, text: '周りが死んだら悲しくて' },
+  { type: 'lyrics', time: 34.54, x: 720, y: 200, text: '「それが嫌だから」っていう' },
+  { type: 'lyrics', time: 37.0, x: 800, y: 300, text: 'エゴなんです。' },
+  { type: 'lyrics', time: 39.7, x: 1000, y: 200, text: '他人が生きてもどうでもよくて' },
+  { type: 'lyrics', time: 42.0, x: 1200, y: 400, text: '誰かを嫌うこともファッションで' },
+  { type: 'lyrics', time: 44.4, x: 1280, y: 420, text: 'それでも「平和に生きよう」' },
+  { type: 'lyrics', time: 46.3, x: 1400, y: 540, text: 'なんて素敵なことでしょう。' },
+  { type: 'lyrics', time: 49.2, x: 1500, y: 640, text: '画面の先では誰かが死んで' },
+  { type: 'lyrics', time: 51.6, x: 100, y: 880, text: 'それを嘆いて誰かが歌って' },
+  { type: 'lyrics', time: 54.0, x: 200, y: 900, text: 'それに感化された少年が' },
+  { type: 'lyrics', time: 56.4, x: 340, y: 980, text: 'ナイフを持って走った。' },
+  { type: 'lyrics', time: 58.19, x: 500, y: 1080, text: '僕らは命に嫌われている。' },
+  { type: 'lyrics', time: 60.79, x: 700, y: 1120, text: '価値観もエゴも押し付けて' },
+  { type: 'lyrics', time: 62.9, x: 1200, y: 1200, text: 'いつも誰かを殺したい歌を' },
+  { type: 'lyrics', time: 65.5, x: 1320, y: 1300, text: '簡単に電波で流した。' },
+  { type: 'lyrics', time: 67.76, x: 1580, y: 1400, text: '僕らは命に嫌われている。' },
+  { type: 'lyrics', time: 70.56, x: 240, y: 1500, text: '軽々しく死にたいだとか' },
+  { type: 'lyrics', time: 72.9, x: 380, y: 1560, text: '軽々しく命を見てる僕らは' },
+  { type: 'lyrics', time: 75.6, x: 920, y: 1800, fontSize: 80, text: '命に嫌われている。' },
 ]
 
 type Script = (ctx: CanvasRenderingContext2D, audio: HTMLAudioElement | null | undefined) => Renderer[]
@@ -70,20 +74,25 @@ const createScript = (): Script => {
           let renderer: Renderer
 
           if (item.animation === 'none') {
-            renderer = createCharRender(item.text.charAt(i), item.x, i * (fontSize + 8) + item.y, {
+            renderer = createCharRender(item.text.charAt(i), item.x * scale, (i * (fontSize + 8) + item.y) * scale, {
               animation: fadeIn(item.time - context.time, 0),
-              font: `${fontSize}px ${fontFamily}`,
+              font: `${fontSize * scale}px ${fontFamily}`,
             })
           } else {
             const relativeDelay = i * 0.1 + item.time - context.time
 
-            renderer = createCharTypingRender(item.text.charAt(i), item.x, i * (fontSize + 8) + item.y, {
-              animation: fadeIn(relativeDelay, 0.1),
-              font: `${fontSize}px ${fontFamily}`,
-              delay: relativeDelay,
-              duration: 0.1,
-              chars: chars.slice(Math.round(Math.random() * (chars.length - 5))),
-            })
+            renderer = createCharTypingRender(
+              item.text.charAt(i),
+              item.x * scale,
+              (i * (fontSize + 8) + item.y) * scale,
+              {
+                animation: fadeIn(relativeDelay, 0.1),
+                font: `${fontSize * scale}px ${fontFamily}`,
+                delay: relativeDelay,
+                duration: 0.1,
+                chars: chars.slice(Math.round(Math.random() * (chars.length - 5))),
+              }
+            )
           }
 
           objects.push(renderer)
@@ -95,7 +104,7 @@ const createScript = (): Script => {
 
     // global settings
     const alpha = 1 - getTimeValue(audio.duration - 5, audio.duration, 1)
-    const yOffset = getTimeIncreaseValue(39, audio.duration, -40)
+    const yOffset = getTimeIncreaseValue(39, audio.duration, -40 * scale)
 
     ctx.globalAlpha = alpha
     ctx.translate(0, yOffset)
@@ -176,8 +185,8 @@ const AnimateCanvas: React.FC = () => {
     }
 
     const init = () => {
-      canvas.width = 1920
-      canvas.height = 1080
+      canvas.width = HDWidth * scale
+      canvas.height = HDHeight * scale
       ctx.strokeStyle = ctx.fillStyle = 'white'
     }
 
@@ -202,7 +211,7 @@ const AnimateCanvas: React.FC = () => {
 
   return (
     <>
-      <div className='fixed inset-0 bottom-2 flex items-center justify-center'>
+      <div className='fixed inset-0 flex flex-col'>
         <canvas ref={ref} className='aspect-video max-w-full max-h-full' />
       </div>
       {ready && <Control audio={audioRef.current!} />}

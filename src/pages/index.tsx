@@ -16,12 +16,13 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <header className={isFullScreen ? 'hidden' : ''}>
+      <AnimateCanvas />
+      <footer className={isFullScreen ? 'hidden' : ''}>
         <a
           href='https://github.com/harukiinharu/kanji-animated'
           rel='noreferrer noopener'
           target='_blank'
-          className='fixed top-4 right-4 z-10'
+          className='fixed bottom-4 right-4 z-10'
         >
           <svg role='img' viewBox='0 0 24 24' width={24} height={24}>
             <title>GitHub</title>
@@ -35,12 +36,11 @@ const Home: React.FC = () => {
           href='https://youtu.be/0HYm60Mjm0k'
           rel='noreferrer noopener'
           target='_blank'
-          className='fixed top-4 left-4 text-sm z-10'
+          className='fixed bottom-4 left-4 text-sm z-10'
         >
           命に嫌われている - Iori Kanzaki
         </a>
-      </header>
-      <AnimateCanvas />
+      </footer>
     </>
   )
 }
