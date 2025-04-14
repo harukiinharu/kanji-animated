@@ -15,9 +15,8 @@
   align-items: center;
   justify-content: space-between;
 
-  & .label {
-    color: #fff;
-  }
+  /* & .label {
+  } */
 
   & .divider {
     flex-grow: 1;
@@ -36,4 +35,9 @@
   padding: 6px 8px;
   border: 1px solid #777;
   border-radius: 4px;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
 }

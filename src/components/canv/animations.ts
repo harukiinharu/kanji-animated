@@ -6,14 +6,14 @@ type Animation = {
   afterRender: (char: string) => void
 }
 
-function writing(delay: number, duration = 1): Animation {
+function writing(delay: number, duration = 1, theme: 'light' | 'dark'): Animation {
   const startTime = context.time + delay,
     endTime = context.time + delay + duration
   const dashLen = 220
 
   return {
     beforeRender() {
-      requireContext().fillStyle = 'black'
+      requireContext().fillStyle = theme === 'dark' ? 'white' : 'black'
     },
     afterRender(char) {
       const ctx = requireContext()
@@ -26,7 +26,7 @@ function writing(delay: number, duration = 1): Animation {
   }
 }
 
-function fadeIn(delay: number, duration = 1): Animation {
+function fadeIn(delay: number, duration = 1, theme: 'light' | 'dark'): Animation {
   const startTime = context.time + delay,
     endTime = context.time + delay + duration
 
@@ -35,7 +35,7 @@ function fadeIn(delay: number, duration = 1): Animation {
       const ctx = requireContext()
       const opacity = getTimeValue(startTime, endTime, 100)
 
-      ctx.fillStyle = `rgba(255,255,255,${opacity / 100})`
+      ctx.fillStyle = `rgba(${theme === 'dark' ? '255,255,255' : '0,0,0'},${opacity / 100})`
     },
     afterRender() {},
   }
@@ -44,9 +44,10 @@ function fadeIn(delay: number, duration = 1): Animation {
 function scaleIn(
   delay: number,
   duration = 1,
+  theme: 'light' | 'dark',
   {
     type = 'all',
-    sub = [fadeIn(delay, duration)],
+    sub = [fadeIn(delay, duration, theme)],
     from = 2,
   }: Partial<{
     from: number
@@ -83,10 +84,11 @@ function scaleIn(
 function slideIn(
   delay: number,
   duration = 1,
+  theme: 'light' | 'dark',
   {
     type = 'x',
     offset = 60,
-    sub = [fadeIn(delay, duration * 1.5)],
+    sub = [fadeIn(delay, duration * 1.5, theme)],
   }: Partial<{
     sub: Animation[]
     offset: number

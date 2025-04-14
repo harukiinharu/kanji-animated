@@ -1,10 +1,10 @@
-const rotates = new Map(
-  Object.entries({
-    '「': Math.PI / 2,
-    '」': Math.PI / 2,
-    '。': -Math.PI,
-  })
-)
+const rotates = {
+  '「': Math.PI / 2,
+  '」': Math.PI / 2,
+  '。': -Math.PI,
+}
+
+const translats = ['、']
 
 type Context = {
   ctx: CanvasRenderingContext2D | null
@@ -22,4 +22,4 @@ function requireContext() {
   return context.ctx!
 }
 
-export { rotates, context, requireContext }
+export { rotates, context, requireContext, translats }

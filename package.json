@@ -2,12 +2,13 @@
   "type": "module",
   "packageManager": "pnpm@10.8.0",
   "scripts": {
-    "d": "vite",
+    "d": "vite --host 0.0.0.0",
     "b": "vite build",
-    "p": "pnpx http-server dist -a localhost -p 5173"
+    "p": "pnpx http-server dist -a 0.0.0.0 -p 5173"
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "lucide-react": "^0.488.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.5.0"

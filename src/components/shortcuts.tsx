@@ -1,51 +1,54 @@
-import styles from './shortcuts.module.css'
+import { ArrowLeft, ArrowRight, Space, LucideProps } from 'lucide-react'
+import s from './shortcuts.module.css'
+
+type Shortcut = {
+  label: string
+  keys?: string[]
+  icons?: React.ForwardRefExoticComponent<Omit<LucideProps, 'ref'> & React.RefAttributes<SVGSVGElement>>[]
+}
+
+const Row: React.FC<{ shortcut: Shortcut }> = ({ shortcut }) => {
+  return (
+    <div className={s.row}>
+      <p className={s.label}>{shortcut.label}</p>
+      <div className={s.divider} />
+      <div className={s.keys}>
+        {shortcut.icons
+          ? shortcut.icons?.map((Icon, index) => (
+              <div key={`${index}`} className={s.key}>
+                <Icon className={s.icon} />
+              </div>
+            ))
+          : shortcut.keys.map((key, index) => (
+              <div key={`${index}`} className={s.key}>
+                {key}
+              </div>
+            ))}
+      </div>
+    </div>
+  )
+}
 
 const ShortcutsModal: React.FC = () => {
-  const shortcuts = [
+  const shortcuts: Shortcut[] = [
     { label: 'Display Shortcuts', keys: ['D'] },
-    { label: 'Play/Pause', keys: ['Space'] },
     { label: 'Fullscreen', keys: ['F'] },
-    { label: 'Backward 5s', keys: ['←'] },
-    { label: 'Forward 5s', keys: ['→'] },
+    { label: 'Toggle Theme', keys: ['T'] },
+    { label: 'Play/Pause', icons: [Space] },
+    { label: 'Backward 5s', icons: [ArrowLeft] },
+    { label: 'Forward 5s', icons: [ArrowRight] },
   ]
 
   return (
-    <div className='opacity-40'>
-      <h1 className={styles.heading}>Keyboard Shortcuts</h1>
-      <div className={styles.shortcuts}>
+    <>
+      <h1 className={s.heading}>Keyboard Shortcuts</h1>
+      <div className={s.shortcuts}>
         {shortcuts.map(shortcut => (
-          <Row key={shortcut.label} keys={shortcut.keys} label={shortcut.label} />
+          <Row key={shortcut.label} shortcut={shortcut} />
         ))}
       </div>
-    </div>
+    </>
   )
-}
-
-interface RowProps {
-  keys: Array<string>
-  label: string
-}
-
-function Row({ label, keys }: RowProps) {
-  return (
-    <div className={styles.row}>
-      <p className={styles.label}>{label}</p>
-      <div className={styles.divider} />
-      <div className={styles.keys}>
-        {keys.map(key => (
-          <Key key={`${label}-${key}`}>{key}</Key>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-interface KeyProps {
-  children: React.ReactNode
-}
-
-function Key({ children }: KeyProps) {
-  return <div className={styles.key}>{children}</div>
 }
 
 export default ShortcutsModal

@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 
 body {
-  background-color: black;
-  color: white;
   font-family: 'Shippori Mincho', serif;
   font-weight: 400;
   font-style: normal;

@@ -1,5 +1,5 @@
 import { Animation } from './animations'
-import { context, requireContext, rotates } from './meta'
+import { context, requireContext, rotates, translats } from './meta'
 import { getTimeValue, renderAnimationsAfter, renderAnimationsBefore } from './utils'
 
 type Renderer = {
@@ -62,8 +62,12 @@ function render(char: string, x: number, y: number, { animation, font }: CharRen
   ctx.textAlign = 'center'
 
   ctx.translate(x + ctx.measureText(char).width / 2, y + ctx.measureText(char).fontBoundingBoxDescent / 2)
-  if (context.vertical && rotates.has(char)) {
-    ctx.rotate(rotates.get(char)!)
+  if (context.vertical) {
+    if (rotates[char]) {
+      ctx.rotate(rotates[char])
+    } else if (translats.includes(char)) {
+      ctx.translate(ctx.measureText(char).width / 1.8, -ctx.measureText(char).width / 1.6)
+    }
   }
 
   if (animation) renderAnimationsBefore(char, animation)
